@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-streamlit = "==1.23.0"
+streamlit = "*"
 streamlit-chat = "*"
 
 [dev-packages]
