@@ -27,11 +27,18 @@ def load_main_header() -> None:
             st.session_state.labels = ['none','file','loaded','yet']
 
     with st.sidebar:
-        st.text_input("OpenAI API Key",type="password")
-        st.caption("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
-        st.divider()
+        tab1, tab2, tab3 = st.tabs(["🔐 Auth", "📝 Config", "✅ saved"])
 
-        st.multiselect(
-            label="Dataframe column",
-            options=st.session_state.labels,
-        )
+        with tab1:
+            st.text_input("OpenAI API Key",type="password")
+            st.caption("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
+
+        with tab2:
+            st.multiselect(
+                label="Dataframe column",
+                options=st.session_state.labels,
+            )
+
+        with tab3:
+            for item in st.session_state.labels:
+                st.markdown("- " + item)
