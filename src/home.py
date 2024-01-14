@@ -19,8 +19,8 @@ st.session_state.setdefault(
 )
 st.session_state.setdefault(
     'generated', 
-    [{'type': 'normal', 'data': 'i can classify documents for you'},
-     {'type': 'normal', 'data': 'load a csv file and select the data from columns'},]
+    [{'type': 'exemple', 'data': 'i can classify documents for you'},
+     {'type': 'exemple', 'data': 'load a csv file and select the data from columns'},]
 )
 def load_main_header():
     """
@@ -43,8 +43,10 @@ def clear_session() -> None:
     """
     Clears session state variables 'prompts' and 'generated'.
     """
-    st.session_state.prompts = []
-    st.session_state.generated = []
+    for item in st.session_state.generated:
+        if item['type'] == 'exemple':
+            st.session_state.prompts = []
+            st.session_state.generated = []
 
 def main() -> None:
     """
