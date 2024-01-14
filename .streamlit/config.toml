@@ -1,6 +1,6 @@
 [server]
 
-runOnSave = false
+runOnSave = true
 
 [theme]
 
