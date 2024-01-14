@@ -19,13 +19,15 @@ def load_main_header() -> None:
         st.caption("🚀 A chatbot powered by OpenAI LLM")
 
     with col2:
-        st.metric('Total Rows', 232120, "10%", delta_color="inverse")
+        total_rows = st.empty()
 
     with col3:
         uploader = st.file_uploader("Upload a CSV", type=["csv"])
 
         if uploader is not None:
-            st.session_state.labels = list(pd.read_csv(uploader).columns)
+            df = pd.read_csv(uploader)
+            st.session_state.labels = list(df.columns)
+            total_rows.metric('Total Rows', len(df), '10%', "inverse")
         else:
             st.session_state.labels = ['none','file','loaded','yet']
 
@@ -36,7 +38,7 @@ def load_main_header() -> None:
             # https://github.com/mkhorasani/Streamlit-Authenticator
             # stauth seems to be easy to implement, lets see other
             # option, if nothing better apear, it'll be the best
-            with open('./.streamlit/users.yaml') as file:
+            with open('./.streamlit/users.yaml', 'r') as file:
                 config = yaml.load(file, Loader=SafeLoader)
 
             authenticator = stauth.Authenticate(
