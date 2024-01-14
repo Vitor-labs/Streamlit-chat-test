@@ -58,4 +58,4 @@ def load_main_header() -> None:
 
         with tab3:
             for item in st.session_state.prompts:
-                st.markdown("- " + item)
+                st.button(item, help='select this previous prompt', use_container_width=True)
