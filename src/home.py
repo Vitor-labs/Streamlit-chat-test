@@ -52,12 +52,6 @@ def main() -> None:
     """
     load_main_header()
 
-    st.sidebar.multiselect(
-        "Dataframe column",
-        ("text", "summary", "title", "body"),
-        key="columns"
-    )
-
     st.button("Clear message", on_click=clear_session)
 
     chat_placeholder = st.empty()
@@ -71,7 +65,7 @@ def main() -> None:
 
     with chat_placeholder.container():
         for i, prompt in enumerate(st.session_state.prompts):
-            time.sleep(.5)
+            time.sleep(.25)
             message(prompt, is_user=True)
             message(st.session_state.generated[i]['data'])
 
