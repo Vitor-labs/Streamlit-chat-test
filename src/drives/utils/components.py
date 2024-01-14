@@ -1,8 +1,11 @@
 """
 This module builds the interface for the app with components
 """
+import yaml
+from yaml.loader import SafeLoader
 import pandas as pd
 import streamlit as st
+import streamlit_authenticator as stauth
 
 
 def load_main_header() -> None:
@@ -12,7 +15,7 @@ def load_main_header() -> None:
     col1, col2, col3 = st.columns([2,1,3])
 
     with col1:
-        st.title("Chatbot💬")
+        st.title("Doc Labeler💬")
         st.caption("🚀 A chatbot powered by OpenAI LLM")
 
     with col2:
@@ -30,8 +33,20 @@ def load_main_header() -> None:
         tab1, tab2, tab3 = st.tabs(["🔐 Auth", "📝 Config", "✅ saved"])
 
         with tab1:
-            st.text_input("OpenAI API Key",type="password")
-            st.caption("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
+            # https://github.com/mkhorasani/Streamlit-Authenticator
+            # stauth seems to be easy to implement, lets see other
+            # option, if nothing better apear, it'll be the best
+            with open('./.streamlit/users.yaml') as file:
+                config = yaml.load(file, Loader=SafeLoader)
+
+            authenticator = stauth.Authenticate(
+                config['credentials'],
+                config['cookie']['name'],
+                config['cookie']['key'],
+                config['cookie']['expiry_days'],
+                config['preauthorized']
+            )
+            authenticator.login('Login', 'main')
 
         with tab2:
             st.multiselect(

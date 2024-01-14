@@ -4,6 +4,8 @@ This module defines the main page for the app
 import time
 import streamlit as st
 from streamlit_chat import message
+import streamlit_authenticator as stauth
+
 
 from drives.utils.components import load_main_header
 
@@ -51,6 +53,7 @@ def main() -> None:
     input field for the user to enter their messages.
     """
     load_main_header()
+    hashed_passwords = stauth.Hasher(['abc', 'def']).generate()
 
     st.button("Clear message", on_click=clear_session)
 
