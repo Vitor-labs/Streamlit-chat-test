@@ -40,5 +40,5 @@ def load_main_header() -> None:
             )
 
         with tab3:
-            for item in st.session_state.labels:
+            for item in st.session_state.prompts:
                 st.markdown("- " + item)
