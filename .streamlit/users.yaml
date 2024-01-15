@@ -3,13 +3,13 @@ credentials:
     jsmith:
       email: jsmith@gmail.com
       name: John Smith
-      password:
+      password: 1234qwer
     rbriggs:
       email: rbriggs@gmail.com
       name: Rebecca Briggs
-      password: 
+      password: 1234qwer
 cookie:
-  expiry_days: 30
+  expiry_days: 5
   key: signature_key # Must be string
   name: cookie_name
 preauthorized:

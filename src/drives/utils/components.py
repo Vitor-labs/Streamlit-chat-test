@@ -1,11 +1,10 @@
 """
 This module builds the interface for the app with components
 """
-import yaml
-from yaml.loader import SafeLoader
 import pandas as pd
 import streamlit as st
-import streamlit_authenticator as stauth
+
+from ..auth import handle_user_login
 
 
 def load_main_header() -> None:
@@ -15,7 +14,7 @@ def load_main_header() -> None:
     col1, col2, col3 = st.columns([2,1,3])
 
     with col1:
-        st.title("Doc Labeler💬")
+        st.title("Doc Labeler")
         st.caption("🚀 A chatbot powered by OpenAI LLM")
 
     with col2:
@@ -35,20 +34,7 @@ def load_main_header() -> None:
         tab1, tab2, tab3 = st.tabs(["🔐 Auth", "📝 Config", "✅ saved"])
 
         with tab1:
-            # https://github.com/mkhorasani/Streamlit-Authenticator
-            # stauth seems to be easy to implement, lets see other
-            # option, if nothing better apear, it'll be the best
-            with open('./.streamlit/users.yaml', 'r') as file:
-                config = yaml.load(file, Loader=SafeLoader)
-
-            authenticator = stauth.Authenticate(
-                config['credentials'],
-                config['cookie']['name'],
-                config['cookie']['key'],
-                config['cookie']['expiry_days'],
-                config['preauthorized']
-            )
-            authenticator.login('Login', 'main')
+            handle_user_login()
 
         with tab2:
             st.multiselect(
@@ -57,5 +43,10 @@ def load_main_header() -> None:
             )
 
         with tab3:
+            # TODO: readd prompt to session state
             for item in st.session_state.prompts:
-                st.button(item, help='select this previous prompt', use_container_width=True)
+                st.button(
+                    item,
+                    help='select this previous prompt',
+                    use_container_width=True,
+                    )
